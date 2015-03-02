@@ -38,5 +38,10 @@
 }
 
 - (IBAction)btnManualSearch:(id)sender {
+    //TEM QUE TESTAR PRA VER SE QUEBRA
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *mapView = [storyboard instantiateViewControllerWithIdentifier:@"MapViewController"];
+    [self presentViewController:mapView animated:YES completion:nil];
+    //[self.navigationController pushViewController:mapView animated:YES]; -- Testei isso antes, mas falhou
 }
 @end
