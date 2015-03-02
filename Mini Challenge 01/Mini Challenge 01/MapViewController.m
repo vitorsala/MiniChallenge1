@@ -110,9 +110,8 @@ static const int STATE_ROUTE = 1;
     Actions
  */
 - (IBAction)btnBack:(id)sender {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *nextView = [storyboard instantiateViewControllerWithIdentifier:@"MainViewController"];
-    [self presentViewController:nextView animated:YES completion:nil];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)btnOptions:(id)sender {

@@ -50,6 +50,7 @@
                                 </state>
                                 <connections>
                                     <action selector="btnManualSearch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0zw-yV-wKc"/>
+                                    <segue destination="H7E-tT-krq" kind="show" id="RXP-S0-zq1"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LOGO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wF0-P4-Uoy">
