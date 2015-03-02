@@ -10,7 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <CloudKit/CloudKit.h>
 
-@interface MapViewController : UIViewController
+@interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
 @property CLLocationManager* locationManager;
 
