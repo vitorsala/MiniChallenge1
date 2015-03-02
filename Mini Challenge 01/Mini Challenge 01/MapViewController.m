@@ -8,12 +8,10 @@
 
 #import "MapViewController.h"
 
-static const int STATE_MANUAL = 0;
-static const int STATE_ROUTE = 1;
 
 @interface MapViewController () {
     CLLocation *currentLocation;
-    int state;
+//    int state;
 }
 
 @end
@@ -26,8 +24,8 @@ static const int STATE_ROUTE = 1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    state = -1;
-    
+    [self changeState:_state];
+
     
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
@@ -39,8 +37,25 @@ static const int STATE_ROUTE = 1;
     // Dispose of any resources that can be recreated.
 }
 
--(void)changeState:(int)s {
-    
+-(void)changeState:(int)state {
+    for(id subView in [self.view subviews]){
+        if(state == 1){ // Info mode
+            if([(UIView *)subView tag] == 1){
+                [(UIView *)subView setHidden:false];
+            }
+            else if([(UIView *)subView tag] == 2){
+                [(UIView *)subView setHidden:true];
+            }
+        }
+        else if(state == 2){ // Search mode
+            if([(UIView *)subView tag] == 1){
+                [(UIView *)subView setHidden:true];
+            }
+            else if([(UIView *)subView tag] == 2){
+                [(UIView *)subView setHidden:false];
+            }
+        }
+    }
 }
 
 /**

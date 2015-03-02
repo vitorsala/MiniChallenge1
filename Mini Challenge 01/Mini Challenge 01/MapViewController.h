@@ -12,14 +12,17 @@
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
-@property CLLocationManager* locationManager;
 
+@property CLLocationManager* locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *lblDescription;
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *map;
+@property int state;
 - (IBAction)btnBack:(id)sender;
 - (IBAction)btnOptions:(id)sender;
 - (IBAction)btnNextPrev:(id)sender;
 - (IBAction)btnSearchRoad:(id)sender;
 
+
+-(void)changeState:(int)state;
 @end
