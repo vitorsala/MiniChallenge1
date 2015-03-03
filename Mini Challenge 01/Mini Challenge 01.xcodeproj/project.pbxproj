@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CAC91C561AA61E5F00274064 /* ParkingLot.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC91C551AA61E5F00274064 /* ParkingLot.m */; };
 		EB5845461AA4DA2600E00064 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5845451AA4DA2600E00064 /* main.m */; };
 		EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5845481AA4DA2600E00064 /* AppDelegate.m */; };
 		EB58454F1AA4DA2600E00064 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB58454D1AA4DA2600E00064 /* Main.storyboard */; };
@@ -30,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CAC91C541AA61E5F00274064 /* ParkingLot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkingLot.h; sourceTree = "<group>"; };
+		CAC91C551AA61E5F00274064 /* ParkingLot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkingLot.m; sourceTree = "<group>"; };
 		EB5845401AA4DA2600E00064 /* Mini Challenge 01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mini Challenge 01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB5845441AA4DA2600E00064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB5845451AA4DA2600E00064 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -102,6 +105,8 @@
 				EB5845501AA4DA2600E00064 /* Images.xcassets */,
 				EB5845521AA4DA2600E00064 /* LaunchScreen.xib */,
 				EB5845431AA4DA2600E00064 /* Supporting Files */,
+				CAC91C541AA61E5F00274064 /* ParkingLot.h */,
+				CAC91C551AA61E5F00274064 /* ParkingLot.m */,
 			);
 			path = "Mini Challenge 01";
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */,
+				CAC91C561AA61E5F00274064 /* ParkingLot.m in Sources */,
 				EB58456B1AA4EDF300E00064 /* MainViewController.m in Sources */,
 				EB5845461AA4DA2600E00064 /* main.m in Sources */,
 				EB58456E1AA4EE2000E00064 /* MapViewController.m in Sources */,
@@ -428,6 +434,7 @@
 				EB5845651AA4DA2700E00064 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB5845661AA4DA2700E00064 /* Build configuration list for PBXNativeTarget "Mini Challenge 01Tests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +443,7 @@
 				EB5845681AA4DA2700E00064 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
