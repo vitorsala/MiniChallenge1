@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4E8ACBDD1AA7998800B3C05A /* ParkingLot.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8ACBDC1AA7998800B3C05A /* ParkingLot.m */; };
 		4E8ACBE31AA79AAC00B3C05A /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8ACBE21AA79AAC00B3C05A /* MyPoint.m */; };
+		4E8ACBE61AA7A36400B3C05A /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E8ACBE51AA7A36400B3C05A /* CustomAnnotation.m */; };
 		EB2154851AA62210006987DF /* MoreMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2154841AA62210006987DF /* MoreMenuTableViewController.m */; };
 		EB2154881AA62290006987DF /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2154871AA62290006987DF /* ItemTableViewCell.m */; };
 		EB5845461AA4DA2600E00064 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5845451AA4DA2600E00064 /* main.m */; };
@@ -38,6 +39,8 @@
 		4E8ACBDC1AA7998800B3C05A /* ParkingLot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkingLot.m; sourceTree = "<group>"; };
 		4E8ACBE11AA79AAC00B3C05A /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPoint.h; sourceTree = "<group>"; };
 		4E8ACBE21AA79AAC00B3C05A /* MyPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPoint.m; sourceTree = "<group>"; };
+		4E8ACBE41AA7A36400B3C05A /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
+		4E8ACBE51AA7A36400B3C05A /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		EB2154831AA62210006987DF /* MoreMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreMenuTableViewController.h; sourceTree = "<group>"; };
 		EB2154841AA62210006987DF /* MoreMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreMenuTableViewController.m; sourceTree = "<group>"; };
 		EB2154861AA62290006987DF /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 		EB5845421AA4DA2600E00064 /* Mini Challenge 01 */ = {
 			isa = PBXGroup;
 			children = (
+				4E8ACBE41AA7A36400B3C05A /* CustomAnnotation.h */,
+				4E8ACBE51AA7A36400B3C05A /* CustomAnnotation.m */,
 				4E8ACBDB1AA7998800B3C05A /* ParkingLot.h */,
 				4E8ACBDC1AA7998800B3C05A /* ParkingLot.m */,
 				EB5845471AA4DA2600E00064 /* AppDelegate.h */,
@@ -252,6 +257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E8ACBE61AA7A36400B3C05A /* CustomAnnotation.m in Sources */,
 				EB2154881AA62290006987DF /* ItemTableViewCell.m in Sources */,
 				EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */,
 				EB58456B1AA4EDF300E00064 /* MainViewController.m in Sources */,
