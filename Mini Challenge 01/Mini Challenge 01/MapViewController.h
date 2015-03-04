@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CloudKit/CloudKit.h>
+#import "CustomAnnotation.h"
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
