@@ -37,19 +37,34 @@
     
     //UI setup
     [self changeState:_state];
-//    _alert = [UIAlertController alertControllerWithTitle:@"Title" message:@"Msg" preferredStyle:UIAlertControllerStyleActionSheet];
-
-//    _viewMoreMenu.layer.position = CGPointMake(_viewMoreMenu.layer.position.x, 800);
+    
+    //permissions
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
     }
+
+    // Actions
+    _alert = [UIAlertController alertControllerWithTitle:@"Title" message:@"Msg" preferredStyle:UIAlertControllerStyleActionSheet];
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"Cancelou");
+    }]];
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais Próximo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"Mais Próximo");
+    }]];
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais Barato" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"Mais Barato");
+    }]];
+    [_alert addAction:[UIAlertAction actionWithTitle:@"24h" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"24h");
+    }]];
+
+    // Map configurations
+    _map.showsUserLocation = YES;
     
     [self test];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    _viewMoreController = [[MoreMenuTableViewController alloc] initWithView:(UITableView *)[self.view viewWithTag:100]];
-    [_viewMoreController.viewMoreMenu setHidden:true];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,15 +94,45 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     currentLocation = locations.lastObject;
     [self updateMapToLocation:currentLocation];
-    
+
     [_locationManager stopUpdatingLocation];
+}
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *location = [[CLLocation alloc]initWithLatitude:[_map region].center.latitude longitude:[_map region].center.longitude];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        if(error){
+            NSLog(@"%@\n",error);
+            return;
+        }
+        NSLog(@"Received placemarks: %@", placemarks);
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+        NSLog(@"My country code: %@ and countryName: %@\n", placemark.ISOcountryCode, placemark.country);
+        NSLog(@"My city name: %@ and Neighborhood: %@\n", placemark.locality, placemark.subLocality);
+        NSLog(@"My street name: %@ @\n", placemark.thoroughfare);
+
+    }];
+
+    [self getLocationFromAddress:@"Avenida Rebouças, São Paulo, Brazil"];
+}
+
+-(CLLocation *)getLocationFromAddress:(NSString *)address{
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
+        for(CLPlacemark *mark in placemarks){
+
+            NSLog(@"%.4f, %.4f",mark.location.coordinate.latitude, mark.location.coordinate.longitude);
+        }
+    }];
+    return nil;
 }
 
 /**
     Map
  */
 - (void)updateMapToLocation:(CLLocation *)location {
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 250, 250);
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1250, 1250);
     [_map setRegion:region animated:YES];
 }
 
@@ -115,12 +160,20 @@
     }];
 }
 
-- (MKOverlayPathRenderer *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay {
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay {
     if ([overlay isKindOfClass:[MKPolyline class]]) {
         MKPolylineRenderer *render = [[MKPolylineRenderer alloc]initWithOverlay:overlay];
         render.lineWidth = 3.0;
         render.strokeColor = [UIColor blueColor];
         return render;
+    }
+    
+    else if ([overlay isKindOfClass:[MKCircle class]]){
+        MKCircleRenderer *circle = [[MKCircleRenderer alloc]initWithOverlay:overlay];
+        circle.lineWidth = 1.0;
+        circle.fillColor = [[UIColor colorWithRed:0 green:0 blue:0.4 alpha:1] colorWithAlphaComponent:0.05];
+        circle.strokeColor = [[UIColor colorWithRed:0 green:0 blue:1 alpha:1] colorWithAlphaComponent:1];
+        return circle;
     }
     return nil;
 }
@@ -155,12 +208,17 @@
 }
 
 - (IBAction)btnOptions:(id)sender {
+    [self presentViewController:_alert animated:YES completion:nil];
 }
 
 - (IBAction)btnNextPrev:(id)sender {
+    [self test];
 }
 
 - (IBAction)btnSearchRoad:(id)sender {
+    [_map removeOverlay:_searchRadius];
+    _searchRadius = [MKCircle circleWithCenterCoordinate:(_map.userLocation.coordinate) radius:500];
+    [_map addOverlay:_searchRadius];
 }
 
 #warning DELETAR MÉTODO!

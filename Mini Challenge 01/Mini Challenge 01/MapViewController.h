@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CloudKit/CloudKit.h>
-#import "MoreMenuTableViewController.h"
+#import "CustomAnnotation.h"
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
@@ -19,9 +19,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *map;
 
+@property NSDictionary* address;
+@property MKCircle *searchRadius;
 @property UIAlertController* alert;
 @property int state;
-@property MoreMenuTableViewController* viewMoreController;
 
 - (IBAction)btnBack:(id)sender;
 - (IBAction)btnOptions:(id)sender;
