@@ -10,8 +10,10 @@
 
 
 @interface MapViewController () {
-    CLLocation *currentLocation;
-//    int state;
+    CLLocation  *currentLocation,
+                *startLocation,
+                *targetLocation;
+    
 }
 
 @end
@@ -24,6 +26,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //location manager setup
+    _locationManager = [[CLLocationManager alloc]init];
+    [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [_locationManager setDelegate:self];
+    
+    //map setup
+    [_map setDelegate:self];
+    [_map addGestureRecognizer:[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(onTapHoldMap:)]];
+    
+    //UI setup
     [self changeState:_state];
 //    _alert = [UIAlertController alertControllerWithTitle:@"Title" message:@"Msg" preferredStyle:UIAlertControllerStyleActionSheet];
 
@@ -31,6 +43,8 @@
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
     }
+    
+    [self test];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -50,28 +64,40 @@
     }
 }
 
-/**
-    Map
- */
-- (void)updateMapToLocation:(CLLocation *)location {
-    currentLocation = location;
-    if(location) {
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 250, 250);
-        [self.map setRegion:region animated:YES];
-    }
+
+-(void)test {
+    [_locationManager startUpdatingLocation];
 }
 
+/**
+    Location Manager
+ */
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    currentLocation = locations.lastObject;
+    [self updateMapToLocation:currentLocation];
     
+    [_locationManager stopUpdatingLocation];
 }
 
--(MKCoordinateRegion)getRoute:(MKPlacemark *)source destination:(MKPlacemark *)destination {
-    MKMapItem *srcItem = [[MKMapItem alloc]initWithPlacemark:source];
-    MKMapItem *destItem = [[MKMapItem alloc]initWithPlacemark:destination];
+/**
+    Map
+ */
+- (void)updateMapToLocation:(CLLocation *)location {
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 250, 250);
+    [_map setRegion:region animated:YES];
+}
+
+-(void)updateMapToCoordinate:(CLLocationCoordinate2D)coordinate {
+    [_map setRegion:MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000) animated:YES];
+}
+
+-(void)calculateRoute:(CLLocationCoordinate2D)source destination:(CLLocationCoordinate2D)destination {
+    MKMapItem *srcItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:source addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
+    MKMapItem *destItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:destination addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
     
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
     [request setSource:srcItem];
@@ -84,32 +110,40 @@
         [routes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             MKRoute *r = obj;
             MKPolyline *line = [r polyline];
-            [self.map addOverlay:line];
-            
-//            NSArray *steps = [r steps];
-//            [steps enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//                
-//            }];
-            
+            [_map addOverlay:line];
         }];
     }];
-    
-    return MKCoordinateRegionMakeWithDistance(source.coordinate, 250, 250);
 }
 
-- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay {
+- (MKOverlayPathRenderer *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay {
     if ([overlay isKindOfClass:[MKPolyline class]]) {
-        MKPolylineView* aView = [[MKPolylineView alloc]initWithPolyline:(MKPolyline*)overlay] ;
-        aView.strokeColor = [[UIColor blueColor] colorWithAlphaComponent:0.5];
-        aView.lineWidth = 10;
-
-        return aView;
+        MKPolylineRenderer *render = [[MKPolylineRenderer alloc]initWithOverlay:overlay];
+        render.lineWidth = 3.0;
+        render.strokeColor = [UIColor blueColor];
+        return render;
     }
     return nil;
 }
 
--(void)mapDrawRoute:(MKMapView *)map overlay:(id)overlay {
+-(void)onTapHoldMap:(UITapGestureRecognizer *)sender {
+    [_map removeAnnotations:[_map annotations]];
     
+    CGPoint point = [sender locationInView:self.view];
+    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"title"]];
+    
+    targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
+    
+    [self calculateRoute:currentLocation.coordinate destination:targetLocation.coordinate];
+}
+
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    //todo: select view, set it as new target location, calculate route
+    NSLog(@"Selected");
+}
+
+-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    NSLog(@"Deselected");
 }
 
 

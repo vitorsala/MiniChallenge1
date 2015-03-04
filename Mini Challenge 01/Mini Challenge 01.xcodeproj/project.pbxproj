@@ -112,6 +112,8 @@
 				EB5845501AA4DA2600E00064 /* Images.xcassets */,
 				EB5845521AA4DA2600E00064 /* LaunchScreen.xib */,
 				EB5845431AA4DA2600E00064 /* Supporting Files */,
+				CAC91C541AA61E5F00274064 /* ParkingLot.h */,
+				CAC91C551AA61E5F00274064 /* ParkingLot.m */,
 			);
 			path = "Mini Challenge 01";
 			sourceTree = "<group>";
@@ -244,6 +246,7 @@
 			files = (
 				EB2154881AA62290006987DF /* ItemTableViewCell.m in Sources */,
 				EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */,
+				CAC91C561AA61E5F00274064 /* ParkingLot.m in Sources */,
 				EB58456B1AA4EDF300E00064 /* MainViewController.m in Sources */,
 				EB5845461AA4DA2600E00064 /* main.m in Sources */,
 				EB58456E1AA4EE2000E00064 /* MapViewController.m in Sources */,
