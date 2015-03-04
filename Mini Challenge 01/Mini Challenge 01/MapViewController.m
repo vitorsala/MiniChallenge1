@@ -33,7 +33,9 @@
     
     //map setup
     [_map setDelegate:self];
+    [_map addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onTapMap:)]];
     [_map addGestureRecognizer:[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(onTapHoldMap:)]];
+    [_map setShowsPointsOfInterest:YES];
     
     //UI setup
     [self changeState:_state];
@@ -67,6 +69,12 @@
 
 -(void)test {
     [_locationManager startUpdatingLocation];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    NSLog(@"U.D. = %f", [defaults floatForKey:@"test"]);
+    [defaults setFloat:6.0 forKey:@"test"];
+    [defaults synchronize];
 }
 
 /**
@@ -125,11 +133,15 @@
     return nil;
 }
 
--(void)onTapHoldMap:(UITapGestureRecognizer *)sender {
+-(void)onTapMap:(UITapGestureRecognizer *)sender {
+    CLLocationCoordinate2D coord = [_map convertPoint:[sender locationInView:self.view] toCoordinateFromView:self.view];
+    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"title"]];
+}
+
+-(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
     [_map removeAnnotations:[_map annotations]];
     
-    CGPoint point = [sender locationInView:self.view];
-    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+    CLLocationCoordinate2D coord = [_map convertPoint:[sender locationInView:self.view] toCoordinateFromView:self.view];
     [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"title"]];
     
     targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
@@ -144,6 +156,14 @@
 
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
     NSLog(@"Deselected");
+}
+
+-(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+//    NSArray *annotations = [_map annotations];
+//    for (CustomAnnotation *in annotations) {
+//        MKMetersBetweenMapPoints(MKMapPointForCoordinate(ann.coordinate), MKMapPointForCoordinate(ann.coordinate));
+//    }
+    
 }
 
 

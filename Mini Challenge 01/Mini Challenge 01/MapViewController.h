@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <CloudKit/CloudKit.h>
 #import "MoreMenuTableViewController.h"
+#import "CustomAnnotation.h"
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
