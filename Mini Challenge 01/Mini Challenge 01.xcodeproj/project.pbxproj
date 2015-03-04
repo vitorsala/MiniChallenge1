@@ -98,6 +98,10 @@
 		EB5845421AA4DA2600E00064 /* Mini Challenge 01 */ = {
 			isa = PBXGroup;
 			children = (
+				4E8ACBE41AA7A36400B3C05A /* CustomAnnotation.h */,
+				4E8ACBE51AA7A36400B3C05A /* CustomAnnotation.m */,
+				4E8ACBDB1AA7998800B3C05A /* ParkingLot.h */,
+				4E8ACBDC1AA7998800B3C05A /* ParkingLot.m */,
 				EB5845471AA4DA2600E00064 /* AppDelegate.h */,
 				EB5845481AA4DA2600E00064 /* AppDelegate.m */,
 				EB5845691AA4EDF300E00064 /* MainViewController.h */,
@@ -110,8 +114,8 @@
 				EB5845501AA4DA2600E00064 /* Images.xcassets */,
 				EB5845521AA4DA2600E00064 /* LaunchScreen.xib */,
 				EB5845431AA4DA2600E00064 /* Supporting Files */,
-				CAC91C541AA61E5F00274064 /* ParkingLot.h */,
-				CAC91C551AA61E5F00274064 /* ParkingLot.m */,
+				4E8ACBE11AA79AAC00B3C05A /* MyPoint.h */,
+				4E8ACBE21AA79AAC00B3C05A /* MyPoint.m */,
 			);
 			path = "Mini Challenge 01";
 			sourceTree = "<group>";
@@ -246,6 +250,8 @@
 				CAC91C561AA61E5F00274064 /* ParkingLot.m in Sources */,
 				EB7CA7F11AA76FE6005C8A62 /* CustomAnnotation.m in Sources */,
 				EB58456B1AA4EDF300E00064 /* MainViewController.m in Sources */,
+				4E8ACBDD1AA7998800B3C05A /* ParkingLot.m in Sources */,
+				4E8ACBE31AA79AAC00B3C05A /* MyPoint.m in Sources */,
 				EB5845461AA4DA2600E00064 /* main.m in Sources */,
 				EB58456E1AA4EE2000E00064 /* MapViewController.m in Sources */,
 			);

@@ -7,7 +7,7 @@
 //
 
 #import "MapViewController.h"
-
+#import "MyPoint.h"
 
 @interface MapViewController () {
     CLLocation  *currentLocation,
@@ -197,6 +197,24 @@
 
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
     NSLog(@"Deselected");
+}
+
+//Método que faz as imagens customizadas das annotations aparecerem no mapa
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    if ([annotation isKindOfClass:[MyPoint class]]){
+        
+        MyPoint *p = (MyPoint *)annotation;
+        MKAnnotationView *mkav = [mapView dequeueReusableAnnotationViewWithIdentifier:@"MyPoint"];
+        
+        if(mkav == nil){
+            mkav = p.annotationView;
+        } else {
+            mkav.annotation = annotation;
+        }
+        return mkav;
+    }
+    return nil;
+    
 }
 
 
