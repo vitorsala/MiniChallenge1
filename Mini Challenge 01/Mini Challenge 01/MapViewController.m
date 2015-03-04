@@ -25,11 +25,17 @@
     [super viewDidLoad];
     
     [self changeState:_state];
+//    _alert = [UIAlertController alertControllerWithTitle:@"Title" message:@"Msg" preferredStyle:UIAlertControllerStyleActionSheet];
 
-    
+//    _viewMoreMenu.layer.position = CGPointMake(_viewMoreMenu.layer.position.x, 800);
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
     }
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    _viewMoreController = [[MoreMenuTableViewController alloc] initWithView:(UITableView *)[self.view viewWithTag:100]];
+    [_viewMoreController.viewMoreMenu setHidden:true];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,23 +44,9 @@
 }
 
 -(void)changeState:(int)state {
-    for(id subView in [self.view subviews]){
-        if(state == 1){ // Info mode
-            if([(UIView *)subView tag] == 1){
-                [(UIView *)subView setHidden:false];
-            }
-            else if([(UIView *)subView tag] == 2){
-                [(UIView *)subView setHidden:true];
-            }
-        }
-        else if(state == 2){ // Search mode
-            if([(UIView *)subView tag] == 1){
-                [(UIView *)subView setHidden:true];
-            }
-            else if([(UIView *)subView tag] == 2){
-                [(UIView *)subView setHidden:false];
-            }
-        }
+    for(UIView *subView in [self.view subviews]){
+        [UIView transitionWithView:subView duration:0.4 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:nil];
+        subView.hidden = (([subView tag] != 0 && state != [subView tag]) || [subView tag] == 100);
     }
 }
 
@@ -125,7 +117,6 @@
     Actions
  */
 - (IBAction)btnBack:(id)sender {
-
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -136,6 +127,12 @@
 }
 
 - (IBAction)btnSearchRoad:(id)sender {
+}
+
+#warning DELETAR MÉTODO!
+- (IBAction)btnTest:(id)sender {
+    _state = (_state == 1 ? 2 : 1);
+    [self changeState:_state];
 }
 
 @end

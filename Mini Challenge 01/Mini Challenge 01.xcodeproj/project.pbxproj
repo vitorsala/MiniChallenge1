@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB2154851AA62210006987DF /* MoreMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2154841AA62210006987DF /* MoreMenuTableViewController.m */; };
+		EB2154881AA62290006987DF /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2154871AA62290006987DF /* ItemTableViewCell.m */; };
 		EB5845461AA4DA2600E00064 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5845451AA4DA2600E00064 /* main.m */; };
 		EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5845481AA4DA2600E00064 /* AppDelegate.m */; };
 		EB58454F1AA4DA2600E00064 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB58454D1AA4DA2600E00064 /* Main.storyboard */; };
@@ -30,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB2154831AA62210006987DF /* MoreMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreMenuTableViewController.h; sourceTree = "<group>"; };
+		EB2154841AA62210006987DF /* MoreMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreMenuTableViewController.m; sourceTree = "<group>"; };
+		EB2154861AA62290006987DF /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemTableViewCell.h; sourceTree = "<group>"; };
+		EB2154871AA62290006987DF /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemTableViewCell.m; sourceTree = "<group>"; };
 		EB5845401AA4DA2600E00064 /* Mini Challenge 01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mini Challenge 01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB5845441AA4DA2600E00064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB5845451AA4DA2600E00064 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -98,6 +104,10 @@
 				EB58456A1AA4EDF300E00064 /* MainViewController.m */,
 				EB58456C1AA4EE2000E00064 /* MapViewController.h */,
 				EB58456D1AA4EE2000E00064 /* MapViewController.m */,
+				EB2154831AA62210006987DF /* MoreMenuTableViewController.h */,
+				EB2154841AA62210006987DF /* MoreMenuTableViewController.m */,
+				EB2154861AA62290006987DF /* ItemTableViewCell.h */,
+				EB2154871AA62290006987DF /* ItemTableViewCell.m */,
 				EB58454D1AA4DA2600E00064 /* Main.storyboard */,
 				EB5845501AA4DA2600E00064 /* Images.xcassets */,
 				EB5845521AA4DA2600E00064 /* LaunchScreen.xib */,
@@ -232,10 +242,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB2154881AA62290006987DF /* ItemTableViewCell.m in Sources */,
 				EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */,
 				EB58456B1AA4EDF300E00064 /* MainViewController.m in Sources */,
 				EB5845461AA4DA2600E00064 /* main.m in Sources */,
 				EB58456E1AA4EE2000E00064 /* MapViewController.m in Sources */,
+				EB2154851AA62210006987DF /* MoreMenuTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,6 +440,7 @@
 				EB5845651AA4DA2700E00064 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EB5845661AA4DA2700E00064 /* Build configuration list for PBXNativeTarget "Mini Challenge 01Tests" */ = {
 			isa = XCConfigurationList;
@@ -436,6 +449,7 @@
 				EB5845681AA4DA2700E00064 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

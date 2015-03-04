@@ -29,11 +29,12 @@
 
 - (IBAction)btnAutomaticSearch:(id)sender {
     state = 1;
+    [self performSegueWithIdentifier:@"transitionToMap" sender:sender];
 }
 
 - (IBAction)btnManualSearch:(id)sender {
     state = 2;
-
+    [self performSegueWithIdentifier:@"transitionToMap" sender:sender];
 }
 
 #pragma mark - Navigation
