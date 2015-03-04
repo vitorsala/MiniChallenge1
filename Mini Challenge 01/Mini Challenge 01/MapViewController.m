@@ -7,7 +7,7 @@
 //
 
 #import "MapViewController.h"
-
+#import "MyPoint.h"
 
 @interface MapViewController () {
     CLLocation  *currentLocation,
@@ -158,11 +158,29 @@
     NSLog(@"Deselected");
 }
 
+<<<<<<< HEAD
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
 //    NSArray *annotations = [_map annotations];
 //    for (CustomAnnotation *in annotations) {
 //        MKMetersBetweenMapPoints(MKMapPointForCoordinate(ann.coordinate), MKMapPointForCoordinate(ann.coordinate));
 //    }
+=======
+//Método que faz as imagens customizadas das annotations aparecerem no mapa
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    if ([annotation isKindOfClass:[MyPoint class]]){
+        
+        MyPoint *p = (MyPoint *)annotation;
+        MKAnnotationView *mkav = [mapView dequeueReusableAnnotationViewWithIdentifier:@"MyPoint"];
+        
+        if(mkav == nil){
+            mkav = p.annotationView;
+        } else {
+            mkav.annotation = annotation;
+        }
+        return mkav;
+    }
+    return nil;
+>>>>>>> 29920d032d3e0dc51d584d4c5685d8e8cf83a891
     
 }
 
