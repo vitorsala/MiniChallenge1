@@ -31,6 +31,6 @@
 
 
 - (void)changeState:(int)state;
-- (CLLocation *)getLocationFromAddress:(NSString *)address;
+- (CLLocation *)showLocationFromAddress:(NSString *)address;
 
 @end

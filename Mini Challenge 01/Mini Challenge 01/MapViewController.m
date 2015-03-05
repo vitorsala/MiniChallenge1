@@ -21,9 +21,8 @@
 
 @implementation MapViewController
 
-/**
- 
- */
+#pragma mark viewStuff
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -84,9 +83,8 @@
     [_locationManager startUpdatingLocation];
 }
 
-/**
-    Location Manager
- */
+#pragma mark locationManager
+
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
 }
 
@@ -117,21 +115,23 @@
     }];
 }
 
--(CLLocation *)getLocationFromAddress:(NSString *)address{
+-(CLLocation *)showLocationFromAddress:(NSString *)address {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
         if(error){
             NSLog(@"%@\n",error);
+            addressGeocoderLocation = nil;
             return;
         }
         addressGeocoderLocation = [placemarks lastObject];
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(addressGeocoderLocation.location.coordinate, 1250, 1250);
+        [_map setRegion:region animated:YES];
     }];
     return nil;
 }
 
-/**
-    Map
- */
+#pragma mark Map
+
 - (void)updateMapToLocation:(CLLocation *)location {
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1250, 1250);
     [_map setRegion:region animated:YES];
@@ -199,7 +199,11 @@
     NSLog(@"Deselected");
 }
 
-//Método que faz as imagens customizadas das annotations aparecerem no mapa
+#pragma mark Annotations
+
+/**
+ Método que faz as imagens customizadas das annotations aparecerem no mapa
+ */
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if ([annotation isKindOfClass:[MyPoint class]]){
         
@@ -216,26 +220,35 @@
     return nil;
 }
 
+#pragma mark Actions
+
 /**
-    Actions
+ *  Volta para a mainView
  */
 - (IBAction)btnBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+/**
+ *  Abre as opções de filtro
+ */
 - (IBAction)btnOptions:(id)sender {
     [self presentViewController:_alert animated:YES completion:nil];
 }
 
+/**
+ *  NOT IMPLEMENTED
+ */
 - (IBAction)btnNextPrev:(id)sender {
     [self test];
 }
 
+/**
+ *  Busca pelo endereço
+ */
 - (IBAction)btnSearchRoad:(id)sender {
     if(![_txtSearchBar.text isEqualToString:@""]){
-        [self getLocationFromAddress:[_txtSearchBar text]];
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(addressGeocoderLocation.location.coordinate, 1250, 1250);
-        [_map setRegion:region animated:YES];
+        [self showLocationFromAddress:[_txtSearchBar text]];
     }
 }
 

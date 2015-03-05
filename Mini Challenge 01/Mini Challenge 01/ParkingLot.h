@@ -15,8 +15,10 @@
 @property int closeSchedule;
 @property float price;
 @property NSString *adress;
+@property float latitude;
+@property float longitude;
 
 - (NSString *) getDescription;
-- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad;
+- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo ;
 
 @end
