@@ -33,6 +33,7 @@
     
     //map setup
     [_map setDelegate:self];
+    [_map addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onTapMap:)]];
     [_map addGestureRecognizer:[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(onTapHoldMap:)]];
     
     //UI setup
@@ -178,7 +179,11 @@
     return nil;
 }
 
--(void)onTapHoldMap:(UITapGestureRecognizer *)sender {
+-(void)onTapMap:(UITapGestureRecognizer *)sender {
+    
+}
+
+-(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
     [_map removeAnnotations:[_map annotations]];
     
     CGPoint point = [sender locationInView:self.view];
