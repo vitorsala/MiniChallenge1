@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CAC91C561AA61E5F00274064 /* ParkingLot.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC91C551AA61E5F00274064 /* ParkingLot.m */; };
-		EB5845461AA4DA2600E00064 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5845451AA4DA2600E00064 /* main.m */; };
 		EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5845481AA4DA2600E00064 /* AppDelegate.m */; };
 		EB58454F1AA4DA2600E00064 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB58454D1AA4DA2600E00064 /* Main.storyboard */; };
 		EB5845511AA4DA2600E00064 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB5845501AA4DA2600E00064 /* Images.xcassets */; };
@@ -19,6 +17,9 @@
 		EB5845701AA4EE9500E00064 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB58456F1AA4EE9500E00064 /* MapKit.framework */; };
 		EB5845721AA4EE9C00E00064 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5845711AA4EE9C00E00064 /* CoreLocation.framework */; };
 		EB7CA7F11AA76FE6005C8A62 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7CA7F01AA76FE6005C8A62 /* CustomAnnotation.m */; };
+		EBF3F9621AA7D6BB0079409C /* MyPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF3F95F1AA7D6BB0079409C /* MyPoint.m */; };
+		EBF3F9631AA7D6BB0079409C /* ParkingLot.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF3F9611AA7D6BB0079409C /* ParkingLot.m */; };
+		EBF3F9671AA7D76B0079409C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF3F9661AA7D76B0079409C /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,11 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CAC91C541AA61E5F00274064 /* ParkingLot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkingLot.h; sourceTree = "<group>"; };
-		CAC91C551AA61E5F00274064 /* ParkingLot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkingLot.m; sourceTree = "<group>"; };
 		EB5845401AA4DA2600E00064 /* Mini Challenge 01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mini Challenge 01.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB5845441AA4DA2600E00064 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EB5845451AA4DA2600E00064 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EB5845471AA4DA2600E00064 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EB5845481AA4DA2600E00064 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		EB58454E1AA4DA2600E00064 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -53,6 +51,11 @@
 		EB5845711AA4EE9C00E00064 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EB7CA7EF1AA76FE6005C8A62 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		EB7CA7F01AA76FE6005C8A62 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
+		EBF3F95E1AA7D6BB0079409C /* MyPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPoint.h; sourceTree = "<group>"; };
+		EBF3F95F1AA7D6BB0079409C /* MyPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPoint.m; sourceTree = "<group>"; };
+		EBF3F9601AA7D6BB0079409C /* ParkingLot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkingLot.h; sourceTree = "<group>"; };
+		EBF3F9611AA7D6BB0079409C /* ParkingLot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParkingLot.m; sourceTree = "<group>"; };
+		EBF3F9661AA7D76B0079409C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,10 +101,6 @@
 		EB5845421AA4DA2600E00064 /* Mini Challenge 01 */ = {
 			isa = PBXGroup;
 			children = (
-				4E8ACBE41AA7A36400B3C05A /* CustomAnnotation.h */,
-				4E8ACBE51AA7A36400B3C05A /* CustomAnnotation.m */,
-				4E8ACBDB1AA7998800B3C05A /* ParkingLot.h */,
-				4E8ACBDC1AA7998800B3C05A /* ParkingLot.m */,
 				EB5845471AA4DA2600E00064 /* AppDelegate.h */,
 				EB5845481AA4DA2600E00064 /* AppDelegate.m */,
 				EB5845691AA4EDF300E00064 /* MainViewController.h */,
@@ -110,12 +109,14 @@
 				EB58456D1AA4EE2000E00064 /* MapViewController.m */,
 				EB7CA7EF1AA76FE6005C8A62 /* CustomAnnotation.h */,
 				EB7CA7F01AA76FE6005C8A62 /* CustomAnnotation.m */,
+				EBF3F95E1AA7D6BB0079409C /* MyPoint.h */,
+				EBF3F95F1AA7D6BB0079409C /* MyPoint.m */,
+				EBF3F9601AA7D6BB0079409C /* ParkingLot.h */,
+				EBF3F9611AA7D6BB0079409C /* ParkingLot.m */,
 				EB58454D1AA4DA2600E00064 /* Main.storyboard */,
 				EB5845501AA4DA2600E00064 /* Images.xcassets */,
 				EB5845521AA4DA2600E00064 /* LaunchScreen.xib */,
 				EB5845431AA4DA2600E00064 /* Supporting Files */,
-				4E8ACBE11AA79AAC00B3C05A /* MyPoint.h */,
-				4E8ACBE21AA79AAC00B3C05A /* MyPoint.m */,
 			);
 			path = "Mini Challenge 01";
 			sourceTree = "<group>";
@@ -124,7 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				EB5845441AA4DA2600E00064 /* Info.plist */,
-				EB5845451AA4DA2600E00064 /* main.m */,
+				EBF3F9661AA7D76B0079409C /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -247,12 +248,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB5845491AA4DA2600E00064 /* AppDelegate.m in Sources */,
-				CAC91C561AA61E5F00274064 /* ParkingLot.m in Sources */,
+				EBF3F9631AA7D6BB0079409C /* ParkingLot.m in Sources */,
 				EB7CA7F11AA76FE6005C8A62 /* CustomAnnotation.m in Sources */,
 				EB58456B1AA4EDF300E00064 /* MainViewController.m in Sources */,
-				4E8ACBDD1AA7998800B3C05A /* ParkingLot.m in Sources */,
-				4E8ACBE31AA79AAC00B3C05A /* MyPoint.m in Sources */,
-				EB5845461AA4DA2600E00064 /* main.m in Sources */,
+				EBF3F9621AA7D6BB0079409C /* MyPoint.m in Sources */,
+				EBF3F9671AA7D76B0079409C /* main.m in Sources */,
 				EB58456E1AA4EE2000E00064 /* MapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

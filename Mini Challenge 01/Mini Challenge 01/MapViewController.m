@@ -7,13 +7,14 @@
 //
 
 #import "MapViewController.h"
-#import "MyPoint.h"
 
 @interface MapViewController () {
     CLLocation  *currentLocation,
                 *startLocation,
                 *targetLocation;
-    
+
+    MKPlacemark *addressGeocoderLocation,
+                *regionGeocoderLocation;
 }
 
 @end
@@ -79,7 +80,6 @@
     }
 }
 
-
 -(void)test {
     [_locationManager startUpdatingLocation];
 }
@@ -88,14 +88,16 @@
     Location Manager
  */
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     currentLocation = locations.lastObject;
     [self updateMapToLocation:currentLocation];
-
     [_locationManager stopUpdatingLocation];
+
+    [_map removeOverlay:_searchRadius];
+    _searchRadius = [MKCircle circleWithCenterCoordinate:(_map.userLocation.coordinate) radius:500];
+    [_map addOverlay:_searchRadius];
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
@@ -106,24 +108,23 @@
             NSLog(@"%@\n",error);
             return;
         }
-        NSLog(@"Received placemarks: %@", placemarks);
-        CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        NSLog(@"My country code: %@ and countryName: %@\n", placemark.ISOcountryCode, placemark.country);
-        NSLog(@"My city name: %@ and Neighborhood: %@\n", placemark.locality, placemark.subLocality);
-        NSLog(@"My street name: %@ @\n", placemark.thoroughfare);
+        regionGeocoderLocation = [placemarks objectAtIndex:0];
 
+//        NSLog(@"Received placemarks: %@", placemarks);
+//        NSLog(@"My country code: %@ and countryName: %@\n", mark.ISOcountryCode, mark.country);
+//        NSLog(@"My city name: %@ and Neighborhood: %@\n", mark.locality, mark.subLocality);
+//        NSLog(@"My street name: %@ @\n", mark.thoroughfare);
     }];
-
-    [self getLocationFromAddress:@"Avenida Rebouças, São Paulo, Brazil"];
 }
 
 -(CLLocation *)getLocationFromAddress:(NSString *)address{
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
-        for(CLPlacemark *mark in placemarks){
-
-            NSLog(@"%.4f, %.4f",mark.location.coordinate.latitude, mark.location.coordinate.longitude);
+        if(error){
+            NSLog(@"%@\n",error);
+            return;
         }
+        addressGeocoderLocation = [placemarks lastObject];
     }];
     return nil;
 }
@@ -167,7 +168,6 @@
         render.strokeColor = [UIColor blueColor];
         return render;
     }
-    
     else if ([overlay isKindOfClass:[MKCircle class]]){
         MKCircleRenderer *circle = [[MKCircleRenderer alloc]initWithOverlay:overlay];
         circle.lineWidth = 1.0;
@@ -214,9 +214,7 @@
         return mkav;
     }
     return nil;
-    
 }
-
 
 /**
     Actions
@@ -234,9 +232,11 @@
 }
 
 - (IBAction)btnSearchRoad:(id)sender {
-    [_map removeOverlay:_searchRadius];
-    _searchRadius = [MKCircle circleWithCenterCoordinate:(_map.userLocation.coordinate) radius:500];
-    [_map addOverlay:_searchRadius];
+    if(![_txtSearchBar.text isEqualToString:@""]){
+        [self getLocationFromAddress:[_txtSearchBar text]];
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(addressGeocoderLocation.location.coordinate, 1250, 1250);
+        [_map setRegion:region animated:YES];
+    }
 }
 
 #warning DELETAR MÉTODO!

@@ -10,9 +10,9 @@
 #import <MapKit/MapKit.h>
 #import <CloudKit/CloudKit.h>
 #import "CustomAnnotation.h"
+#import "MyPoint.h"
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
-
 
 @property CLLocationManager* locationManager;
 @property (weak, nonatomic) IBOutlet UILabel *lblDescription;
@@ -30,5 +30,7 @@
 - (IBAction)btnSearchRoad:(id)sender;
 
 
--(void)changeState:(int)state;
+- (void)changeState:(int)state;
+- (CLLocation *)getLocationFromAddress:(NSString *)address;
+
 @end
