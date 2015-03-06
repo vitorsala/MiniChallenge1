@@ -61,7 +61,11 @@
 
     // Map configurations
     _map.showsUserLocation = YES;
-
+    
+    //Data
+    [CentralData initData];
+    
+    [self addParkingLots];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
