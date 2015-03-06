@@ -15,6 +15,8 @@
 
     MKPlacemark *addressGeocoderLocation,
                 *regionGeocoderLocation;
+    
+    CustomAnnotation *targetAnnotation;
 }
 
 @end
@@ -201,11 +203,12 @@
 }
 
 -(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
-    [_map removeAnnotations:[_map annotations]];
+    [_map removeAnnotation:targetAnnotation];
     
     CGPoint point = [sender locationInView:self.view];
     CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
-    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"title"]];
+    targetAnnotation = [[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"title"];
+    [_map addAnnotation:targetAnnotation];
     
     targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
     
