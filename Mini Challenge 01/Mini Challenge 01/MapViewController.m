@@ -21,9 +21,8 @@
 
 @implementation MapViewController
 
-/**
- 
- */
+#pragma mark viewStuff
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -34,11 +33,12 @@
     
     //map setup
     [_map setDelegate:self];
+    [_map addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onTapMap:)]];
     [_map addGestureRecognizer:[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(onTapHoldMap:)]];
     
     //UI setup
     [self changeState:_state];
-    
+
     //permissions
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
@@ -63,10 +63,14 @@
     // Map configurations
     _map.showsUserLocation = YES;
     
-    [self test];
+    //Data
+    [CentralData initData];
+    
+    [self addParkingLots];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [self test];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,20 +89,21 @@
     [_locationManager startUpdatingLocation];
 }
 
-/**
-    Location Manager
- */
+#pragma mark locationManager
+
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     currentLocation = locations.lastObject;
     [self updateMapToLocation:currentLocation];
-    [_locationManager stopUpdatingLocation];
 
     [_map removeOverlay:_searchRadius];
-    _searchRadius = [MKCircle circleWithCenterCoordinate:(_map.userLocation.coordinate) radius:500];
+    _searchRadius = [MKCircle circleWithCenterCoordinate:(currentLocation.coordinate) radius:500];
     [_map addOverlay:_searchRadius];
+
+    [_locationManager stopUpdatingLocation];
+
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
@@ -118,21 +123,30 @@
     }];
 }
 
--(CLLocation *)getLocationFromAddress:(NSString *)address{
+-(CLLocation *)showLocationFromAddress:(NSString *)address {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
         if(error){
             NSLog(@"%@\n",error);
+            addressGeocoderLocation = nil;
             return;
         }
         addressGeocoderLocation = [placemarks lastObject];
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(addressGeocoderLocation.location.coordinate, 1250, 1250);
+        [_map setRegion:region animated:YES];
     }];
     return nil;
 }
 
-/**
-    Map
- */
+#pragma mark Map
+-(void)addParkingLots {
+    NSArray *parkinglots = [CentralData getParkingLots];
+    for (ParkingLot *pl in parkinglots) {
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(pl.latitude, pl.longitude);
+        [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:pl.name]];
+    }
+}
+
 - (void)updateMapToLocation:(CLLocation *)location {
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1250, 1250);
     [_map setRegion:region animated:YES];
@@ -149,7 +163,7 @@
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
     [request setSource:srcItem];
     [request setDestination:destItem];
-    [request setTransportType:MKDirectionsTransportTypeWalking];
+    [request setTransportType:MKDirectionsTransportTypeAutomobile];
     
     MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
     [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
@@ -179,7 +193,15 @@
     return nil;
 }
 
--(void)onTapHoldMap:(UITapGestureRecognizer *)sender {
+-(void)onTapMap:(UITapGestureRecognizer *)sender {
+    CGPoint point = [sender locationInView:self.view];
+    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
+    
+    NSLog(@"coordinates: %f, %f", coord.latitude, coord.longitude);
+}
+
+-(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
     [_map removeAnnotations:[_map annotations]];
     
     CGPoint point = [sender locationInView:self.view];
@@ -200,7 +222,11 @@
     NSLog(@"Deselected");
 }
 
-//Método que faz as imagens customizadas das annotations aparecerem no mapa
+#pragma mark Annotations
+
+/**
+ Método que faz as imagens customizadas das annotations aparecerem no mapa
+ */
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if ([annotation isKindOfClass:[MyPoint class]]){
         
@@ -217,26 +243,35 @@
     return nil;
 }
 
+#pragma mark Actions
+
 /**
-    Actions
+ *  Volta para a mainView
  */
 - (IBAction)btnBack:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+/**
+ *  Abre as opções de filtro
+ */
 - (IBAction)btnOptions:(id)sender {
     [self presentViewController:_alert animated:YES completion:nil];
 }
 
+/**
+ *  NOT IMPLEMENTED
+ */
 - (IBAction)btnNextPrev:(id)sender {
     [self test];
 }
 
+/**
+ *  Busca pelo endereço
+ */
 - (IBAction)btnSearchRoad:(id)sender {
     if(![_txtSearchBar.text isEqualToString:@""]){
-        [self getLocationFromAddress:[_txtSearchBar text]];
-        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(addressGeocoderLocation.location.coordinate, 1250, 1250);
-        [_map setRegion:region animated:YES];
+        [self showLocationFromAddress:[_txtSearchBar text]];
     }
 }
 - (IBAction)btnCurrentLocation:(id)sender {

@@ -11,6 +11,7 @@
 #import <CloudKit/CloudKit.h>
 #import "CustomAnnotation.h"
 #import "MyPoint.h"
+#import "CentralData.h" 
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
@@ -29,8 +30,7 @@
 - (IBAction)btnNextPrev:(id)sender;
 - (IBAction)btnSearchRoad:(id)sender;
 
-
 - (void)changeState:(int)state;
-- (CLLocation *)getLocationFromAddress:(NSString *)address;
+- (CLLocation *)showLocationFromAddress:(NSString *)address;
 
 @end
