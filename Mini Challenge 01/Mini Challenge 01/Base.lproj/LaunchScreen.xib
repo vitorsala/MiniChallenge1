@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,31 +10,82 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 Nerf. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="439" width="441" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mini Challenge 01" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="140" width="441" height="43"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="Dkl-Hk-itN">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoEstacionando2" translatesAutoresizingMaskIntoConstraints="NO" id="Lzo-j0-HLG">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="227" id="1Ca-vc-8Hq"/>
+                        <constraint firstAttribute="height" constant="227" id="Ykm-yy-SCV"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="1Ca-vc-8Hq"/>
+                            <exclude reference="Ykm-yy-SCV"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="1Ca-vc-8Hq"/>
+                            <include reference="Ykm-yy-SCV"/>
+                        </mask>
+                    </variation>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="bottom" multiplier="1/3" constant="1" id="5cJ-9S-tgC"/>
-                <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="Koa-jz-hwk"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
-                <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerY" secondItem="Lzo-j0-HLG" secondAttribute="centerY" constant="4.5" id="8S7-Jm-PBK"/>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9t9-rZ-E0a"/>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Aoq-hg-7aH"/>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerY" secondItem="Lzo-j0-HLG" secondAttribute="centerY" constant="4.5" id="B5W-7X-x2w"/>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerX" secondItem="Lzo-j0-HLG" secondAttribute="centerX" constant="-0.5" id="EcU-rX-buf"/>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerY" secondItem="Lzo-j0-HLG" secondAttribute="centerY" constant="-3.5" id="HdU-Oc-t8W"/>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerX" secondItem="Lzo-j0-HLG" secondAttribute="centerX" constant="-0.5" id="WYG-ge-i8V"/>
+                <constraint firstAttribute="trailing" secondItem="Dkl-Hk-itN" secondAttribute="trailing" id="a5D-ns-1gy"/>
+                <constraint firstAttribute="bottom" secondItem="Dkl-Hk-itN" secondAttribute="bottom" id="bHj-hk-OdJ"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="Dkl-Hk-itN"/>
+                    <exclude reference="Lzo-j0-HLG"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="8S7-Jm-PBK"/>
+                    <exclude reference="9t9-rZ-E0a"/>
+                    <exclude reference="Aoq-hg-7aH"/>
+                    <exclude reference="B5W-7X-x2w"/>
+                    <exclude reference="EcU-rX-buf"/>
+                    <exclude reference="HdU-Oc-t8W"/>
+                    <exclude reference="WYG-ge-i8V"/>
+                    <exclude reference="a5D-ns-1gy"/>
+                    <exclude reference="bHj-hk-OdJ"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="Dkl-Hk-itN"/>
+                    <include reference="Lzo-j0-HLG"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="8S7-Jm-PBK"/>
+                    <include reference="9t9-rZ-E0a"/>
+                    <include reference="Aoq-hg-7aH"/>
+                    <exclude reference="B5W-7X-x2w"/>
+                    <include reference="EcU-rX-buf"/>
+                    <include reference="HdU-Oc-t8W"/>
+                    <exclude reference="WYG-ge-i8V"/>
+                    <include reference="a5D-ns-1gy"/>
+                    <include reference="bHj-hk-OdJ"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="548" y="455"/>
         </view>
     </objects>
+    <resources>
+        <image name="Background" width="1200" height="1920"/>
+        <image name="logoEstacionando2" width="588" height="588"/>
+    </resources>
 </document>

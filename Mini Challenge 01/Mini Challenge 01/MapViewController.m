@@ -49,15 +49,16 @@
     [_alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"Cancelou");
     }]];
-    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais Próximo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais próximo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"Mais Próximo");
     }]];
-    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais Barato" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais barato" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"Mais Barato");
     }]];
     [_alert addAction:[UIAlertAction actionWithTitle:@"24h" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"24h");
     }]];
+    
 
     // Map configurations
     _map.showsUserLocation = YES;
@@ -237,6 +238,10 @@
         MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(addressGeocoderLocation.location.coordinate, 1250, 1250);
         [_map setRegion:region animated:YES];
     }
+}
+- (IBAction)btnCurrentLocation:(id)sender {
+    [_locationManager startUpdatingLocation];
+    
 }
 
 #warning DELETAR MÉTODO!
