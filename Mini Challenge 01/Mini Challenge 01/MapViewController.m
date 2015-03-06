@@ -134,6 +134,13 @@
 }
 
 #pragma mark Map
+-(void)addParkingLots {
+    NSArray *parkinglots = [CentralData getParkingLots];
+    for (ParkingLot *pl in parkinglots) {
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(pl.latitude, pl.longitude);
+        [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:pl.name]];
+    }
+}
 
 - (void)updateMapToLocation:(CLLocation *)location {
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1250, 1250);
@@ -151,7 +158,7 @@
     MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
     [request setSource:srcItem];
     [request setDestination:destItem];
-    [request setTransportType:MKDirectionsTransportTypeWalking];
+    [request setTransportType:MKDirectionsTransportTypeAutomobile];
     
     MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
     [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
@@ -182,7 +189,11 @@
 }
 
 -(void)onTapMap:(UITapGestureRecognizer *)sender {
+    CGPoint point = [sender locationInView:self.view];
+    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
     
+    NSLog(@"coordinates: %f, %f", coord.latitude, coord.longitude);
 }
 
 -(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {

@@ -11,6 +11,7 @@
 #import <CloudKit/CloudKit.h>
 #import "CustomAnnotation.h"
 #import "MyPoint.h"
+#import "CentralData.h" 
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
