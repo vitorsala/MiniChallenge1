@@ -17,6 +17,12 @@
                 *regionGeocoderLocation;
     
     CustomAnnotation *targetAnnotation;
+    
+    NSArray *directions;
+    
+    MKCircle *overlayCircle;
+    
+    float SEARCH_RADIUS;
 }
 
 @end
@@ -28,6 +34,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    SEARCH_RADIUS = 500;
+    
     //location manager setup
     _locationManager = [[CLLocationManager alloc]init];
     [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
@@ -37,6 +45,7 @@
     [_map setDelegate:self];
     [_map addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onTapMap:)]];
     [_map addGestureRecognizer:[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(onTapHoldMap:)]];
+    _map.showsUserLocation = YES;
     
     //UI setup
     [self changeState:_state];
@@ -60,18 +69,18 @@
     [_alert addAction:[UIAlertAction actionWithTitle:@"24h" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"24h");
     }]];
-
-    // Map configurations
-    _map.showsUserLocation = YES;
     
     //Data
     [CentralData initData];
-    
     [self addParkingLots];
+    
+    [_locationManager startUpdatingLocation];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     [self test];
+    //[NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(findAllAnnotationsInRegion) userInfo:nil repeats:NO];
+    //[self findAllAnnotationsInRegion];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,7 +96,7 @@
 }
 
 -(void)test {
-    [_locationManager startUpdatingLocation];
+
 }
 
 #pragma mark locationManager
@@ -98,13 +107,8 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     currentLocation = locations.lastObject;
     [self updateMapToLocation:currentLocation];
-
-    [_map removeOverlay:_searchRadius];
-    _searchRadius = [MKCircle circleWithCenterCoordinate:(currentLocation.coordinate) radius:500];
-    [_map addOverlay:_searchRadius];
-
+    
     [_locationManager stopUpdatingLocation];
-
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
@@ -153,10 +157,6 @@
     [_map setRegion:region animated:YES];
 }
 
--(void)updateMapToCoordinate:(CLLocationCoordinate2D)coordinate {
-    [_map setRegion:MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000) animated:YES];
-}
-
 -(void)calculateRoute:(CLLocationCoordinate2D)source destination:(CLLocationCoordinate2D)destination {
     MKMapItem *srcItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:source addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
     MKMapItem *destItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:destination addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
@@ -174,6 +174,15 @@
             MKPolyline *line = [r polyline];
             [_map addOverlay:line];
         }];
+    }];
+}
+
+-(void)calculateRoutesByProximity:(CLLocation *)source destinations:(NSArray *)dest {
+    [RouteRequest calculateRoutes:source destinations:dest block:^(NSMutableArray *dir) {
+        directions = dir;
+        for (MKDirectionsResponse *response in dir) {
+            [self mapDrawRoute:response.routes];
+        }
     }];
 }
 
@@ -195,24 +204,39 @@
 }
 
 -(void)onTapMap:(UITapGestureRecognizer *)sender {
-    CGPoint point = [sender locationInView:self.view];
-    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
-    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
     
-    NSLog(@"coordinates: %f, %f", coord.latitude, coord.longitude);
 }
 
 -(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
-    [_map removeAnnotation:targetAnnotation];
-    
     CGPoint point = [sender locationInView:self.view];
     CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
-    targetAnnotation = [[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"title"];
-    [_map addAnnotation:targetAnnotation];
+    //NSLog(@"llll %f, %f", coord.latitude, coord.longitude);
+    
+    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
     
     targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
     
-    [self calculateRoute:currentLocation.coordinate destination:targetLocation.coordinate];
+    [self mapClearOverlay];
+    [self mapDrawCircle:targetLocation];
+    [self calculateRoutesByProximity:targetLocation destinations:[CentralData getClosestFrom:targetLocation maxDistance:SEARCH_RADIUS]];
+}
+
+-(void)mapClearOverlay {
+    [_map removeOverlays:_map.overlays];
+}
+
+-(void)mapDrawCircle:(CLLocation *)location {
+    [_map removeOverlay:overlayCircle];
+    overlayCircle = [MKCircle circleWithCenterCoordinate:(location.coordinate) radius:SEARCH_RADIUS];
+    [_map addOverlay:overlayCircle];
+}
+
+-(void)mapDrawRoute:(NSArray *)routes {
+    [routes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        MKRoute *r = obj;
+        MKPolyline *line = [r polyline];
+        [_map addOverlay:line];
+    }];
 }
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
