@@ -10,7 +10,7 @@
 
 @implementation ParkingLot
 
-- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo {
+- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo imageName:(NSString*)i{
     self = [super init];
     if (self) {
         _name = n;
@@ -21,6 +21,7 @@
         _latitude = la;
         _longitude = lo;
         _location = [[CLLocation alloc]initWithLatitude:la longitude:lo];
+        _imageName = i;
     }
     return self;
 }
@@ -29,9 +30,9 @@
 - (NSString *)getDescription {
     NSString *d = [NSString alloc];
     if(_opSchedule == _closeSchedule){
-        d = [d initWithString:[NSString stringWithFormat:@"Nome: %@ \nHorário: Aberto 24h \nPreço por hora: R$%f \nEndereço: %@", _name, _price, _adress]];
+        d = [d initWithString:[NSString stringWithFormat:@"Horário: Aberto 24h \nPreço por hora: R$%.2f \nEndereço: %@", _price, _adress]];
     } else {
-        d = [d initWithString:[NSString stringWithFormat:@"Nome: %@\nHorário: %dh - %dh \nPreço por hora: R$%f\nEndereço: %@", _name, _opSchedule, _closeSchedule, _price, _adress]];
+        d = [d initWithString:[NSString stringWithFormat:@"Horário: %dh - %dh \nPreço por hora: R$%.2f\nEndereço: %@",  _opSchedule, _closeSchedule, _price, _adress]];
     }
     
     return d;

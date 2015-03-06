@@ -45,7 +45,7 @@
     [_map setDelegate:self];
     [_map addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onTapMap:)]];
     [_map addGestureRecognizer:[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(onTapHoldMap:)]];
-    _map.showsUserLocation = YES;
+    _map.tintColor = [UIColor colorWithRed:0/255.0 green:128/255.0 blue:255/255.0 alpha:1];
     
     //UI setup
     [self changeState:_state];
@@ -60,7 +60,7 @@
     [_alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"Cancelou");
     }]];
-    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais próximo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais perto" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"Mais Próximo");
     }]];
     [_alert addAction:[UIAlertAction actionWithTitle:@"Mais barato" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -74,7 +74,14 @@
     [CentralData initData];
     [self addParkingLots];
     
+
     [_locationManager startUpdatingLocation];
+
+    //BETA pls understand
+    /*NSArray *ann = [_map annotations];
+    [_map selectAnnotation:[ann objectAtIndex:0] animated:NO];
+    
+    _lblDescription.text = [(id<MKAnnotation>)[ann objectAtIndex:0] subtitle];*/
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -130,7 +137,7 @@
     NSArray *parkinglots = [CentralData getParkingLots];
     for (ParkingLot *pl in parkinglots) {
         CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(pl.latitude, pl.longitude);
-        [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:pl.name]];
+        [_map addAnnotation:[[MyPoint alloc]initWithCoordinate:coord title:pl.name imageName:pl.imageName subtitle:pl.getDescription]];
     }
 }
 
@@ -192,6 +199,11 @@
 }
 
 -(void)onTapMap:(UITapGestureRecognizer *)sender {
+
+    CGPoint point = [sender locationInView:self.view];
+    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+    //[_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
+
     
 }
 
@@ -251,10 +263,15 @@
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     //todo: select view, set it as new target location, calculate route
+    MyPoint *p = [view annotation];
+    _lblDescription.text = [p subtitle];
+    _lblDescription.hidden = false;
     NSLog(@"Selected");
 }
 
 -(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    _lblDescription.text = nil;
+    _lblDescription.hidden = true;
     NSLog(@"Deselected");
 }
 
