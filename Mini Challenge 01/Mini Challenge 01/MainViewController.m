@@ -105,6 +105,8 @@
     if([[segue identifier] isEqualToString:@"transitionToMap"]){
         MapViewController *map = [segue destinationViewController];
         [map setState:state];
+        UIButton *btnSender = (UIButton *)sender;
+        map.senderTitle = btnSender.titleLabel.text;
     }
 }
 

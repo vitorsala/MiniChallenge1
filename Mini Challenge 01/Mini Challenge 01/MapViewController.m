@@ -71,6 +71,7 @@
 
 -(void)viewDidAppear:(BOOL)animated{
     [self test];
+    NSLog(@"%@", _senderTitle);
 }
 
 - (void)didReceiveMemoryWarning {

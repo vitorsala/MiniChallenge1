@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *map;
 
+@property NSString *senderTitle;
 @property NSDictionary* address;
 @property MKCircle *searchRadius;
 @property UIAlertController* alert;

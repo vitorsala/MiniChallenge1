@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8FA9DAEC1AA8F1980002BDA2 /* CentralData.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA9DAEB1AA8F1980002BDA2 /* CentralData.m */; };
 		CA750BF91AA8DEEB005C918F /* DesignableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA750BF81AA8DEEB005C918F /* DesignableView.swift */; };
 		CA750BFC1AA8DF24005C918F /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CA750BFB1AA8DF24005C918F /* CustomButton.m */; };
 		CA750BFF1AA95C3F005C918F /* CustomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CA750BFE1AA95C3F005C918F /* CustomLabel.m */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8FA9DAEA1AA8F1980002BDA2 /* CentralData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CentralData.h; sourceTree = "<group>"; };
+		8FA9DAEB1AA8F1980002BDA2 /* CentralData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CentralData.m; sourceTree = "<group>"; };
 		CA750BF71AA8DEEA005C918F /* Mini Challenge 01-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mini Challenge 01-Bridging-Header.h"; sourceTree = "<group>"; };
 		CA750BF81AA8DEEB005C918F /* DesignableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableView.swift; sourceTree = "<group>"; };
 		CA750BFA1AA8DF24005C918F /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
