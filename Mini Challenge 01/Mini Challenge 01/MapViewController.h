@@ -29,7 +29,6 @@
 - (IBAction)btnNextPrev:(id)sender;
 - (IBAction)btnSearchRoad:(id)sender;
 
-
 - (void)changeState:(int)state;
 - (CLLocation *)showLocationFromAddress:(NSString *)address;
 

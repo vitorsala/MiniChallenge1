@@ -38,7 +38,7 @@
     
     //UI setup
     [self changeState:_state];
-    
+
     //permissions
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
@@ -61,11 +61,11 @@
 
     // Map configurations
     _map.showsUserLocation = YES;
-    
-    [self test];
+
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    [self test];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -92,11 +92,13 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     currentLocation = locations.lastObject;
     [self updateMapToLocation:currentLocation];
-    [_locationManager stopUpdatingLocation];
 
     [_map removeOverlay:_searchRadius];
-    _searchRadius = [MKCircle circleWithCenterCoordinate:(_map.userLocation.coordinate) radius:500];
+    _searchRadius = [MKCircle circleWithCenterCoordinate:(currentLocation.coordinate) radius:500];
     [_map addOverlay:_searchRadius];
+
+    [_locationManager stopUpdatingLocation];
+
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
