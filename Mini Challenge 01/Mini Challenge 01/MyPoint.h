@@ -11,7 +11,7 @@
 
 @interface MyPoint : NSObject <MKAnnotation>
 
--(id) initWithCoordinate:(CLLocationCoordinate2D)c title:(NSString *)t imageName: (NSString *)n;
+-(id) initWithCoordinate:(CLLocationCoordinate2D)c title:(NSString *)t imageName: (NSString *)n subtitle: (NSString *)s;
 -(MKAnnotationView *)annotationView;
 
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
@@ -20,5 +20,7 @@
 
 //Propriedade própria do nome da imagem
 @property (nonatomic, copy) NSString *imageName;
+
+@property(nonatomic, readonly, copy) NSString *subtitle;
 
 @end
