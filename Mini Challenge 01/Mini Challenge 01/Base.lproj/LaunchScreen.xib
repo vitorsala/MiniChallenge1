@@ -13,7 +13,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="Dkl-Hk-itN">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logoEstacionando2" translatesAutoresizingMaskIntoConstraints="NO" id="Lzo-j0-HLG">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newIconEstac" translatesAutoresizingMaskIntoConstraints="NO" id="Lzo-j0-HLG">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="227" id="1Ca-vc-8Hq"/>
@@ -86,6 +86,6 @@
     </objects>
     <resources>
         <image name="Background" width="1200" height="1920"/>
-        <image name="logoEstacionando2" width="588" height="588"/>
+        <image name="newIconEstac" width="1024" height="1024"/>
     </resources>
 </document>
