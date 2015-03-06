@@ -78,7 +78,6 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self test];
     //[NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(findAllAnnotationsInRegion) userInfo:nil repeats:NO];
     //[self findAllAnnotationsInRegion];
     NSLog(@"%@", _senderTitle);
@@ -96,10 +95,6 @@
     }
 }
 
--(void)test {
-
-}
-
 #pragma mark locationManager
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
@@ -113,20 +108,6 @@
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    CLLocation *location = [[CLLocation alloc]initWithLatitude:[_map region].center.latitude longitude:[_map region].center.longitude];
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        if(error){
-            NSLog(@"%@\n",error);
-            return;
-        }
-        regionGeocoderLocation = [placemarks objectAtIndex:0];
-
-//        NSLog(@"Received placemarks: %@", placemarks);
-//        NSLog(@"My country code: %@ and countryName: %@\n", mark.ISOcountryCode, mark.country);
-//        NSLog(@"My city name: %@ and Neighborhood: %@\n", mark.locality, mark.subLocality);
-//        NSLog(@"My street name: %@ @\n", mark.thoroughfare);
-    }];
 }
 
 -(CLLocation *)showLocationFromAddress:(NSString *)address {
@@ -181,9 +162,15 @@
 -(void)calculateRoutesByProximity:(CLLocation *)source destinations:(NSArray *)dest {
     [RouteRequest calculateRoutes:source destinations:dest block:^(NSMutableArray *dir) {
         directions = dir;
+        MKDirectionsResponse *best = [dir firstObject];
         for (MKDirectionsResponse *response in dir) {
-            [self mapDrawRoute:response.routes];
+            MKRoute *r1 = [[best routes] firstObject];
+            MKRoute *r2 = [[response routes] firstObject];
+            if(r1.distance > r2.distance){
+                best = response;
+            }
         }
+        [self mapDrawRoute:best.routes];
     }];
 }
 
@@ -209,17 +196,39 @@
 }
 
 -(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
-    CGPoint point = [sender locationInView:self.view];
-    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
-    //NSLog(@"llll %f, %f", coord.latitude, coord.longitude);
-    
-    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
-    
-    targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
-    
-    [self mapClearOverlay];
-    [self mapDrawCircle:targetLocation];
-    [self calculateRoutesByProximity:targetLocation destinations:[CentralData getClosestFrom:targetLocation maxDistance:SEARCH_RADIUS]];
+    if(sender.state == UIGestureRecognizerStateBegan){
+        CGPoint point = [sender locationInView:self.view];
+        CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+        //NSLog(@"llll %f, %f", coord.latitude, coord.longitude);
+
+        [_map removeAnnotation:targetAnnotation];
+        targetAnnotation = [[CustomAnnotation alloc] initWithCoordinate:coord andTitle:@"Local"];
+        [_map addAnnotation:targetAnnotation];
+        
+        targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
+        
+        [self mapClearOverlay];
+        [self mapDrawCircle:targetLocation];
+        [self calculateRoutesByProximity:targetLocation destinations:[CentralData getClosestFrom:targetLocation maxDistance:SEARCH_RADIUS]];
+
+        // Adiciona o endereço do local na barra de busca.
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        CLLocation *location = [[CLLocation alloc]initWithLatitude:[_map region].center.latitude longitude:[_map region].center.longitude];
+        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if(error){
+                NSLog(@"%@\n",error);
+                return;
+            }
+            regionGeocoderLocation = [placemarks objectAtIndex:0];
+            _txtSearchBar.text = regionGeocoderLocation.thoroughfare;
+
+            //        NSLog(@"Received placemarks: %@", placemarks);
+            //        NSLog(@"My country code: %@ and countryName: %@\n", mark.ISOcountryCode, mark.country);
+            //        NSLog(@"My city name: %@ and Neighborhood: %@\n", mark.locality, mark.subLocality);
+            //        NSLog(@"My street name: %@ @\n", mark.thoroughfare);
+        }];
+
+    }
 }
 
 -(void)mapClearOverlay {
@@ -290,7 +299,7 @@
  *  NOT IMPLEMENTED
  */
 - (IBAction)btnNextPrev:(id)sender {
-    [self test];
+
 }
 
 /**
@@ -308,8 +317,7 @@
 
 #warning DELETAR MÉTODO!
 - (IBAction)btnTest:(id)sender {
-    _state = (_state == 1 ? 2 : 1);
-    [self changeState:_state];
+
 }
 
 @end
