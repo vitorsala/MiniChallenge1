@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtSearchBar;
 @property (weak, nonatomic) IBOutlet MKMapView *map;
 
+@property NSString *senderTitle;
 @property UIAlertController* alert;
 @property int state;
 

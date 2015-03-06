@@ -60,10 +60,10 @@
     [_alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"Cancelou");
     }]];
-    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais Próximo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais próximo" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"Mais Próximo");
     }]];
-    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais Barato" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [_alert addAction:[UIAlertAction actionWithTitle:@"Mais barato" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"Mais Barato");
     }]];
     [_alert addAction:[UIAlertAction actionWithTitle:@"24h" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -81,6 +81,7 @@
     [self test];
     //[NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(findAllAnnotationsInRegion) userInfo:nil repeats:NO];
     //[self findAllAnnotationsInRegion];
+    NSLog(@"%@", _senderTitle);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -299,6 +300,10 @@
     if(![_txtSearchBar.text isEqualToString:@""]){
         [self showLocationFromAddress:[_txtSearchBar text]];
     }
+}
+- (IBAction)btnCurrentLocation:(id)sender {
+    [_locationManager startUpdatingLocation];
+    
 }
 
 #warning DELETAR MÉTODO!
