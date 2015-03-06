@@ -27,7 +27,11 @@
 
 - (NSString *)getDescription {
     NSString *d = [NSString alloc];
-    d = [d initWithString:[NSString stringWithFormat:@"Nome: %@\nAbre às: %dh\nFecha às: %dh\nPreço por hora: R$%f\nEndereço: %@", _name, _opSchedule, _closeSchedule, _price, _adress]];
+    if(_opSchedule == _closeSchedule){
+        d = [d initWithString:[NSString stringWithFormat:@"Nome: %@ \nHorário: Aberto 24h \nPreço por hora: R$%f \nEndereço: %@", _name, _price, _adress]];
+    } else {
+        d = [d initWithString:[NSString stringWithFormat:@"Nome: %@\nHorário: %dh - %dh \nPreço por hora: R$%f\nEndereço: %@", _name, _opSchedule, _closeSchedule, _price, _adress]];
+    }
     
     return d;
     
