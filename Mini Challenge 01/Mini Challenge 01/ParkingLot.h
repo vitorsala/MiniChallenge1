@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface ParkingLot : NSObject
 
@@ -17,6 +18,7 @@
 @property NSString *adress;
 @property float latitude;
 @property float longitude;
+@property CLLocation *location;
 
 - (NSString *) getDescription;
 - (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo ;

@@ -54,6 +54,18 @@ static NSMutableArray *parkingLots;
     return parkingLots;
 }
 
++(NSArray *)getClosestFrom:(CLLocation *)loc maxDistance:(float)maxDistance {
+    NSMutableArray *p = [[NSMutableArray alloc]init];
+    for (ParkingLot *pl in parkingLots) {
+        double dist = [loc distanceFromLocation:pl.location];
+        if(dist <= maxDistance) {
+            [p addObject:pl];
+        }
+    }
+    
+    return p;
+}
+
 
 
 @end

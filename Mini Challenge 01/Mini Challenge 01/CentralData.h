@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "ParkingLot.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface CentralData : NSObject
 
 +(void)initData;
 +(NSMutableArray *)getParkingLots;
++(NSArray *)getClosestFrom:(CLLocation *)loc maxDistance:(float)maxDistance;
 
 @end

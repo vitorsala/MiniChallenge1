@@ -12,6 +12,7 @@
 #import "CustomAnnotation.h"
 #import "MyPoint.h"
 #import "CentralData.h" 
+#import "RouteRequest.h"
 
 @interface MapViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate>
 
@@ -21,8 +22,6 @@
 @property (weak, nonatomic) IBOutlet MKMapView *map;
 
 @property NSString *senderTitle;
-@property NSDictionary* address;
-@property MKCircle *searchRadius;
 @property UIAlertController* alert;
 @property int state;
 
