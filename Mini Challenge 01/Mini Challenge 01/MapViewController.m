@@ -110,7 +110,12 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     currentLocation = locations.lastObject;
     [self updateMapToLocation:currentLocation];
-    
+
+    if(_state == 1){
+        [self getNearestDestination:currentLocation.coordinate];
+        
+    }
+
     [_locationManager stopUpdatingLocation];
 }
 
@@ -207,40 +212,45 @@
     
 }
 
--(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
+-(void) onTapHoldMap:(UILongPressGestureRecognizer *)sender {
     if(sender.state == UIGestureRecognizerStateBegan){
         CGPoint point = [sender locationInView:self.view];
         CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
         //NSLog(@"llll %f, %f", coord.latitude, coord.longitude);
 
         [_map removeAnnotation:targetAnnotation];
-        targetAnnotation = [[CustomAnnotation alloc] initWithCoordinate:coord andTitle:@"Local"];
-        [_map addAnnotation:targetAnnotation];
-        
-        targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
-        
-        [self mapClearOverlay];
-        [self mapDrawCircle:targetLocation];
-        [self calculateRoutesByProximity:targetLocation destinations:[CentralData getClosestFrom:targetLocation maxDistance:SEARCH_RADIUS]];
-
-        // Adiciona o endereço do local na barra de busca.
-        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-        CLLocation *location = [[CLLocation alloc]initWithLatitude:[_map region].center.latitude longitude:[_map region].center.longitude];
-        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-            if(error){
-                NSLog(@"%@\n",error);
-                return;
-            }
-            regionGeocoderLocation = [placemarks objectAtIndex:0];
-            _txtSearchBar.text = regionGeocoderLocation.thoroughfare;
-
-            //        NSLog(@"Received placemarks: %@", placemarks);
-            //        NSLog(@"My country code: %@ and countryName: %@\n", mark.ISOcountryCode, mark.country);
-            //        NSLog(@"My city name: %@ and Neighborhood: %@\n", mark.locality, mark.subLocality);
-            //        NSLog(@"My street name: %@ @\n", mark.thoroughfare);
-        }];
+        [self getNearestDestination:coord];
 
     }
+}
+
+
+- (void) getNearestDestination:(CLLocationCoordinate2D)coord{
+    targetAnnotation = [[CustomAnnotation alloc] initWithCoordinate:coord andTitle:@""];
+    [_map addAnnotation:targetAnnotation];
+
+    targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
+
+    [self mapClearOverlay];
+    [self mapDrawCircle:targetLocation];
+    [self calculateRoutesByProximity:targetLocation destinations:[CentralData getClosestFrom:targetLocation maxDistance:SEARCH_RADIUS]];
+
+    // Adiciona o endereço do local na barra de busca.
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *location = [[CLLocation alloc]initWithLatitude:[_map region].center.latitude longitude:[_map region].center.longitude];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        if(error){
+            NSLog(@"%@\n",error);
+            return;
+        }
+        regionGeocoderLocation = [placemarks objectAtIndex:0];
+        _txtSearchBar.text = regionGeocoderLocation.thoroughfare;
+
+        //        NSLog(@"Received placemarks: %@", placemarks);
+        //        NSLog(@"My country code: %@ and countryName: %@\n", mark.ISOcountryCode, mark.country);
+        //        NSLog(@"My city name: %@ and Neighborhood: %@\n", mark.locality, mark.subLocality);
+        //        NSLog(@"My street name: %@ @\n", mark.thoroughfare);
+    }];
 }
 
 -(void)mapClearOverlay {
@@ -263,9 +273,11 @@
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     //todo: select view, set it as new target location, calculate route
-    MyPoint *p = [view annotation];
-    _lblDescription.text = [p subtitle];
-    _lblDescription.hidden = false;
+    if([view isKindOfClass:[MyPoint class]]){
+        MyPoint *p = [view annotation];
+        _lblDescription.text = [p subtitle];
+        _lblDescription.hidden = false;
+    }
     NSLog(@"Selected");
 }
 
