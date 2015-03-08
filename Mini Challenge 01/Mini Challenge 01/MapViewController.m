@@ -273,7 +273,8 @@
 
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     //todo: select view, set it as new target location, calculate route
-    if([view isKindOfClass:[MyPoint class]]){
+    
+    if([[view annotation] isKindOfClass:[MyPoint class]]){
         MyPoint *p = [view annotation];
         _lblDescription.text = [p subtitle];
         _lblDescription.hidden = false;
