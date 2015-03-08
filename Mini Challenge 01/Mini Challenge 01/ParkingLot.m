@@ -10,7 +10,7 @@
 
 @implementation ParkingLot
 
-- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo imageName:(NSString*)i{
+- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo {
     self = [super init];
     if (self) {
         _name = n;
@@ -21,7 +21,11 @@
         _latitude = la;
         _longitude = lo;
         _location = [[CLLocation alloc]initWithLatitude:la longitude:lo];
-        _imageName = i;
+        if(_opSchedule == _closeSchedule){
+            _imageName = @"location2";
+        } else {
+            _imageName = @"location1";
+        }
     }
     return self;
 }

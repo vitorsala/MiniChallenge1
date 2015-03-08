@@ -22,6 +22,6 @@
 @property NSString *imageName;
 
 - (NSString *) getDescription;
-- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo imageName:(NSString*)i;
+- (id) initName: (NSString *)n opSchedule: (int)o closeSchedule: (int)c price: (float)p adress: (NSString *)ad latitude:(float)la longitude:(float)lo;
 
 @end
