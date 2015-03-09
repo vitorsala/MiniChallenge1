@@ -50,6 +50,7 @@
     
     //UI setup
     [self changeState:_state];
+    _map.showsUserLocation = true;
 
     //permissions
     if ([_locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
@@ -75,11 +76,17 @@
     [CentralData initData];
     [self addParkingLots];
     
+
     [_locationManager startUpdatingLocation];
+
+    //BETA pls understand
+    /*NSArray *ann = [_map annotations];
+    [_map selectAnnotation:[ann objectAtIndex:0] animated:NO];
+    
+    _lblDescription.text = [(id<MKAnnotation>)[ann objectAtIndex:0] subtitle];*/
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self test];
     //[NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(findAllAnnotationsInRegion) userInfo:nil repeats:NO];
     //[self findAllAnnotationsInRegion];
     NSLog(@"%@", _senderTitle);
@@ -97,44 +104,49 @@
     }
 }
 
--(void)test {
-
+/**
+ *  @brief Método para exibir uma mensagem de erro, e dar dismiss na tela.
+ *  
+ *  A janela de erro será exibido com a seguinte estrutura de string: "Erro %d: %@", code, errorMsg
+ *
+ *  @param errorMsg Texto para ser exibido na janela de erro
+ *  @param code     Código a ser exibido na tela de erro
+ *  @param isRecoverable    Booleano que indica se é um erro recuperável, se TRUE: a mensagem de erro não irá dar dismiss no map view
+ */
+-(void) errorWithMsg:(NSString *)errorMsg andCode:(NSInteger)code isRecoverable:(bool)isRecoverable{
+    UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:@"Erro" message:[NSString stringWithFormat:@"Código %ld: %@",code ,errorMsg] preferredStyle:UIAlertControllerStyleAlert];
+    [errorAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        if(!isRecoverable){
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    }]];
+    [self presentViewController:errorAlert animated:YES completion:nil ];
 }
 
 #pragma mark locationManager
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    [self errorWithMsg:@"Erro ao obter localização do GPS" andCode:[error code] isRecoverable:NO];
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     currentLocation = locations.lastObject;
     [self updateMapToLocation:currentLocation];
-    
+
+    if(_state == 1){
+        [self getNearestDestination:currentLocation.coordinate];
+    }
     [_locationManager stopUpdatingLocation];
 }
 
 -(void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated{
-    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    CLLocation *location = [[CLLocation alloc]initWithLatitude:[_map region].center.latitude longitude:[_map region].center.longitude];
-    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-        if(error){
-            NSLog(@"%@\n",error);
-            return;
-        }
-        regionGeocoderLocation = [placemarks objectAtIndex:0];
-
-//        NSLog(@"Received placemarks: %@", placemarks);
-//        NSLog(@"My country code: %@ and countryName: %@\n", mark.ISOcountryCode, mark.country);
-//        NSLog(@"My city name: %@ and Neighborhood: %@\n", mark.locality, mark.subLocality);
-//        NSLog(@"My street name: %@ @\n", mark.thoroughfare);
-    }];
 }
 
 -(CLLocation *)showLocationFromAddress:(NSString *)address {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:address completionHandler:^(NSArray *placemarks, NSError *error) {
         if(error){
-            NSLog(@"%@\n",error);
+            [self errorWithMsg:@"Não foi possível obter a localização do endereço" andCode:error.code isRecoverable:YES];
             addressGeocoderLocation = nil;
             return;
         }
@@ -150,42 +162,13 @@
     NSArray *parkinglots = [CentralData getParkingLots];
     for (ParkingLot *pl in parkinglots) {
         CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(pl.latitude, pl.longitude);
-        [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:pl.name]];
+        [_map addAnnotation:[[MyPoint alloc]initWithCoordinate:coord title:pl.name imageName:pl.imageName subtitle:pl.getDescription]];
     }
 }
 
 - (void)updateMapToLocation:(CLLocation *)location {
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1250, 1250);
     [_map setRegion:region animated:YES];
-}
-
--(void)calculateRoute:(CLLocationCoordinate2D)source destination:(CLLocationCoordinate2D)destination {
-    MKMapItem *srcItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:source addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
-    MKMapItem *destItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:destination addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
-    
-    MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
-    [request setSource:srcItem];
-    [request setDestination:destItem];
-    [request setTransportType:MKDirectionsTransportTypeAutomobile];
-    
-    MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
-    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-        NSArray *routes = [response routes];
-        [routes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            MKRoute *r = obj;
-            MKPolyline *line = [r polyline];
-            [_map addOverlay:line];
-        }];
-    }];
-}
-
--(void)calculateRoutesByProximity:(CLLocation *)source destinations:(NSArray *)dest {
-    [RouteRequest calculateRoutes:source destinations:dest block:^(NSMutableArray *dir) {
-        directions = dir;
-        for (MKDirectionsResponse *response in dir) {
-            [self mapDrawRoute:response.routes];
-        }
-    }];
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView viewForOverlay:(id)overlay {
@@ -206,23 +189,22 @@
 }
 
 -(void)onTapMap:(UITapGestureRecognizer *)sender {
-    
+//    CGPoint point = [sender locationInView:self.view];
+//    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+//    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
 }
 
--(void)onTapHoldMap:(UILongPressGestureRecognizer *)sender {
-    CGPoint point = [sender locationInView:self.view];
-    CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
-    //NSLog(@"llll %f, %f", coord.latitude, coord.longitude);
-    
-    [_map addAnnotation:[[CustomAnnotation alloc]initWithCoordinate:coord andTitle:@"checking"]];
-    
-    targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
-    
-    [self mapClearOverlay];
-    [self mapDrawCircle:targetLocation];
-    [self calculateRoutesByProximity:targetLocation destinations:[CentralData getClosestFrom:targetLocation maxDistance:SEARCH_RADIUS]];
-}
+-(void) onTapHoldMap:(UILongPressGestureRecognizer *)sender {
+    if(sender.state == UIGestureRecognizerStateBegan){
+        CGPoint point = [sender locationInView:self.view];
+        CLLocationCoordinate2D coord = [_map convertPoint:point toCoordinateFromView:self.view];
+        //NSLog(@"llll %f, %f", coord.latitude, coord.longitude);
 
+        [_map removeAnnotation:targetAnnotation];
+        [self getNearestDestination:coord];
+
+    }
+}
 -(void)mapClearOverlay {
     [_map removeOverlays:_map.overlays];
 }
@@ -233,6 +215,8 @@
     [_map addOverlay:overlayCircle];
 }
 
+#pragma mark Rotas
+
 -(void)mapDrawRoute:(NSArray *)routes {
     [routes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         MKRoute *r = obj;
@@ -241,13 +225,73 @@
     }];
 }
 
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    //todo: select view, set it as new target location, calculate route
-    NSLog(@"Selected");
+-(void)calculateRoute:(CLLocationCoordinate2D)source destination:(CLLocationCoordinate2D)destination {
+    MKMapItem *srcItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:source addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
+    MKMapItem *destItem = [[MKMapItem alloc]initWithPlacemark:[[MKPlacemark alloc]initWithCoordinate:destination addressDictionary:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"", nil]]];
+
+    MKDirectionsRequest *request = [[MKDirectionsRequest alloc]init];
+    [request setSource:srcItem];
+    [request setDestination:destItem];
+    [request setTransportType:MKDirectionsTransportTypeAutomobile];
+
+    MKDirections *direction = [[MKDirections alloc]initWithRequest:request];
+    [direction calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+        if(error){
+            [self errorWithMsg:@"Não foi possível obter rota para o local escolhido" andCode:error.code isRecoverable:YES];
+            return;
+        }
+        NSArray *routes = [response routes];
+        [routes enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            MKRoute *r = obj;
+            MKPolyline *line = [r polyline];
+            [_map addOverlay:line];
+        }];
+    }];
 }
 
--(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
-    NSLog(@"Deselected");
+-(void)calculateRoutesByProximity:(CLLocation *)source destinations:(NSArray *)dest {
+    [RouteRequest calculateRoutes:source destinations:dest block:^(NSMutableArray *dir) {
+        directions = dir;
+        MKDirectionsResponse *best = [dir firstObject];
+        for (MKDirectionsResponse *response in dir) {
+            MKRoute *r1 = [[best routes] firstObject];
+            MKRoute *r2 = [[response routes] firstObject];
+            if(r1.distance > r2.distance){
+                best = response;
+            }
+        }
+        [self mapDrawRoute:best.routes];
+    }];
+}
+
+- (void) getNearestDestination:(CLLocationCoordinate2D)coord{
+    targetAnnotation = [[CustomAnnotation alloc] initWithCoordinate:coord andTitle:@""];
+    [_map addAnnotation:targetAnnotation];
+
+    targetLocation = [[CLLocation alloc]initWithLatitude:coord.latitude longitude:coord.longitude];
+
+    [self mapClearOverlay];
+    [self mapDrawCircle:targetLocation];
+    [self calculateRoutesByProximity:targetLocation destinations:[CentralData getClosestFrom:targetLocation maxDistance:SEARCH_RADIUS]];
+
+    // Adiciona o endereço do local na barra de busca.
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:[_map region].center.latitude longitude:[_map region].center.longitude];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        if(error){
+            [self errorWithMsg:@"Erro ao obter locais próximo" andCode:error.code isRecoverable:NO];
+            return;
+        }
+        if([placemarks count] > 0){
+            regionGeocoderLocation = [placemarks firstObject];
+            _txtSearchBar.text = regionGeocoderLocation.thoroughfare;
+
+            //        NSLog(@"Received placemarks: %@", placemarks);
+            //        NSLog(@"My country code: %@ and countryName: %@\n", mark.ISOcountryCode, mark.country);
+            //        NSLog(@"My city name: %@ and Neighborhood: %@\n", mark.locality, mark.subLocality);
+            //        NSLog(@"My street name: %@ @\n", mark.thoroughfare);
+        }
+    }];
 }
 
 #pragma mark Annotations
@@ -271,6 +315,22 @@
     return nil;
 }
 
+-(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    //todo: select view, set it as new target location, calculate route
+
+    if([[view annotation] isKindOfClass:[MyPoint class]]){
+        MyPoint *p = [view annotation];
+        _lblDescription.text = [p subtitle];
+        _lblDescription.hidden = false;
+    }
+    NSLog(@"Selected");
+}
+
+-(void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    _lblDescription.text = nil;
+    _lblDescription.hidden = true;
+    NSLog(@"Deselected");
+}
 #pragma mark Actions
 
 /**
@@ -291,7 +351,7 @@
  *  NOT IMPLEMENTED
  */
 - (IBAction)btnNextPrev:(id)sender {
-    [self test];
+
 }
 
 /**
@@ -305,12 +365,6 @@
 - (IBAction)btnCurrentLocation:(id)sender {
     [_locationManager startUpdatingLocation];
     
-}
-
-#warning DELETAR MÉTODO!
-- (IBAction)btnTest:(id)sender {
-    _state = (_state == 1 ? 2 : 1);
-    [self changeState:_state];
 }
 
 @end

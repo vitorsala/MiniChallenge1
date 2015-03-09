@@ -10,15 +10,16 @@
 
 @implementation MyPoint
 
-@synthesize coordinate, title, imageName;
+@synthesize coordinate, title, imageName, subtitle;
 
--(id) initWithCoordinate:(CLLocationCoordinate2D)c title:(NSString *)t imageName: (NSString *)n{
+-(id) initWithCoordinate:(CLLocationCoordinate2D)c title:(NSString *)t imageName: (NSString *)n subtitle: (NSString *)s{
     self = [super init];
     if(self)
     {
         coordinate = c;
         [self setTitle:t];
         imageName = n;//Guarda apenas o NOME da imagem. No método annotationView ele é "convertida" pra UIImage.
+        subtitle = s;
     }
     return self;
 }
