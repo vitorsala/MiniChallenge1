@@ -36,18 +36,18 @@ static NSMutableArray *parkingLots;
                    [[ParkingLot alloc] initName:@"Estapar" opSchedule:7 closeSchedule:21 price:9.0 adress:@"R. Frei Caneca, 1409" latitude:-23.558162 longitude: -46.658380],
                    [[ParkingLot alloc] initName:@"Evon Park" opSchedule:0 closeSchedule:0 price:11.0 adress:@"Alameda Jaú, 1456" latitude:-23.560152 longitude: -46.661433],
                    [[ParkingLot alloc] initName:@"Rede Park" opSchedule:10 closeSchedule:2 price:8.0 adress:@"Alameda Santos, 2159" latitude:-23.558760 longitude: -46.661857],
-                   [[ParkingLot alloc] initName:@"Star Fix Estacionamento" opSchedule:7 closeSchedule:23 price:12.0 adress:@"Alameda Santos, 1834" latitude:-23.561513 longitude: -46.658723],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.564221 longitude: -46.659507],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.565074 longitude: -46.655426],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.563324 longitude: -46.652977],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.559059 longitude: -46.650610],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.555483 longitude: -46.653026],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.553283 longitude: -46.648586],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.555199 longitude: -46.645027],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.551907 longitude: -46.644130],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.545182 longitude: -46.644463],
-                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.544299 longitude: -46.646471],
-                   nil];
+                   [[ParkingLot alloc] initName:@"Star Fix Estacionamento" opSchedule:7 closeSchedule:23 price:12.0 adress:@"Alameda Santos, 1834" latitude:-23.561513 longitude: -46.658723], nil];
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.564221 longitude: -46.659507],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.565074 longitude: -46.655426],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.563324 longitude: -46.652977],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.559059 longitude: -46.650610],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.555483 longitude: -46.653026],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.553283 longitude: -46.648586],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.555199 longitude: -46.645027],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.551907 longitude: -46.644130],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.545182 longitude: -46.644463],
+//                   [[ParkingLot alloc] initName:@"" opSchedule:0 closeSchedule:0 price:0.0 adress:@"" latitude:-23.544299 longitude: -46.646471],
+//                   nil];
 }
 
 +(NSMutableArray *)getParkingLots {
