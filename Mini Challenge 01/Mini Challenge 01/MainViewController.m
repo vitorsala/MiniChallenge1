@@ -35,7 +35,7 @@
     // esconder botoes para animacao
     [self hideButtons];
     // chegar imagem para baixo
-    logoImageView.transform = CGAffineTransformMakeTranslation(0.0, 140.0);
+    logoImageView.transform = CGAffineTransformMakeTranslation(0.0, 105.0);
     firstTime = YES;
 }
 

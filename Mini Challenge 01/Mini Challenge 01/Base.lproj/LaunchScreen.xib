@@ -13,72 +13,105 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="Dkl-Hk-itN">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newIconEstac" translatesAutoresizingMaskIntoConstraints="NO" id="Lzo-j0-HLG">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="novo" translatesAutoresizingMaskIntoConstraints="NO" id="ZwC-Hp-3zq">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="227" id="1Ca-vc-8Hq"/>
-                        <constraint firstAttribute="height" constant="227" id="Ykm-yy-SCV"/>
+                        <constraint firstAttribute="width" constant="335" id="3hX-o5-slQ"/>
+                        <constraint firstAttribute="height" constant="97" id="fIw-b2-18C"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="1Ca-vc-8Hq"/>
-                            <exclude reference="Ykm-yy-SCV"/>
+                            <exclude reference="3hX-o5-slQ"/>
+                            <exclude reference="fIw-b2-18C"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
-                            <include reference="1Ca-vc-8Hq"/>
-                            <include reference="Ykm-yy-SCV"/>
+                            <include reference="3hX-o5-slQ"/>
+                            <include reference="fIw-b2-18C"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newIconEstac" translatesAutoresizingMaskIntoConstraints="NO" id="Lzo-j0-HLG">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="227" id="XC3-a3-Qi4"/>
+                        <constraint firstAttribute="height" constant="227" id="mlY-w1-fEu"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="XC3-a3-Qi4"/>
+                            <exclude reference="mlY-w1-fEu"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="XC3-a3-Qi4"/>
+                            <include reference="mlY-w1-fEu"/>
                         </mask>
                     </variation>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerX" secondItem="Lzo-j0-HLG" secondAttribute="centerX" constant="0.5" id="05L-8z-eaK">
+                    <variation key="heightClass=regular-widthClass=compact" constant="-0.5"/>
+                </constraint>
                 <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerY" secondItem="Lzo-j0-HLG" secondAttribute="centerY" constant="4.5" id="8S7-Jm-PBK"/>
                 <constraint firstItem="Dkl-Hk-itN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="9t9-rZ-E0a"/>
                 <constraint firstItem="Dkl-Hk-itN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Aoq-hg-7aH"/>
                 <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerY" secondItem="Lzo-j0-HLG" secondAttribute="centerY" constant="4.5" id="B5W-7X-x2w"/>
-                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerX" secondItem="Lzo-j0-HLG" secondAttribute="centerX" constant="-0.5" id="EcU-rX-buf"/>
-                <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerY" secondItem="Lzo-j0-HLG" secondAttribute="centerY" constant="-3.5" id="HdU-Oc-t8W"/>
+                <constraint firstItem="ZwC-Hp-3zq" firstAttribute="centerX" secondItem="Dkl-Hk-itN" secondAttribute="centerX" constant="0.5" id="OA3-Eg-YVD"/>
+                <constraint firstItem="ZwC-Hp-3zq" firstAttribute="top" secondItem="Lzo-j0-HLG" secondAttribute="bottom" constant="8" id="Onu-x0-B8t">
+                    <variation key="heightClass=regular-widthClass=compact" constant="-59"/>
+                </constraint>
                 <constraint firstItem="Dkl-Hk-itN" firstAttribute="centerX" secondItem="Lzo-j0-HLG" secondAttribute="centerX" constant="-0.5" id="WYG-ge-i8V"/>
                 <constraint firstAttribute="trailing" secondItem="Dkl-Hk-itN" secondAttribute="trailing" id="a5D-ns-1gy"/>
                 <constraint firstAttribute="bottom" secondItem="Dkl-Hk-itN" secondAttribute="bottom" id="bHj-hk-OdJ"/>
+                <constraint firstItem="Lzo-j0-HLG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="120" id="hMd-ZN-dbr">
+                    <variation key="heightClass=regular-widthClass=compact" constant="187"/>
+                </constraint>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="Dkl-Hk-itN"/>
+                    <exclude reference="ZwC-Hp-3zq"/>
                     <exclude reference="Lzo-j0-HLG"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="05L-8z-eaK"/>
                     <exclude reference="8S7-Jm-PBK"/>
                     <exclude reference="9t9-rZ-E0a"/>
                     <exclude reference="Aoq-hg-7aH"/>
                     <exclude reference="B5W-7X-x2w"/>
-                    <exclude reference="EcU-rX-buf"/>
-                    <exclude reference="HdU-Oc-t8W"/>
                     <exclude reference="WYG-ge-i8V"/>
                     <exclude reference="a5D-ns-1gy"/>
                     <exclude reference="bHj-hk-OdJ"/>
+                    <exclude reference="hMd-ZN-dbr"/>
+                    <exclude reference="OA3-Eg-YVD"/>
+                    <exclude reference="Onu-x0-B8t"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
                     <include reference="Dkl-Hk-itN"/>
+                    <include reference="ZwC-Hp-3zq"/>
                     <include reference="Lzo-j0-HLG"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="05L-8z-eaK"/>
                     <exclude reference="8S7-Jm-PBK"/>
                     <include reference="9t9-rZ-E0a"/>
                     <include reference="Aoq-hg-7aH"/>
                     <exclude reference="B5W-7X-x2w"/>
-                    <include reference="EcU-rX-buf"/>
-                    <include reference="HdU-Oc-t8W"/>
                     <exclude reference="WYG-ge-i8V"/>
                     <include reference="a5D-ns-1gy"/>
                     <include reference="bHj-hk-OdJ"/>
+                    <include reference="hMd-ZN-dbr"/>
+                    <include reference="OA3-Eg-YVD"/>
+                    <include reference="Onu-x0-B8t"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="548" y="455"/>
@@ -87,5 +120,6 @@
     <resources>
         <image name="Background" width="1200" height="1920"/>
         <image name="newIconEstac" width="1024" height="1024"/>
+        <image name="novo" width="752" height="220"/>
     </resources>
 </document>
